@@ -6003,7 +6003,7 @@ void scroller(Monitor *m, unsigned int gappo, unsigned int gappi) {
     c = tempClients[i];
     if (root_client == c) {
       if (c->geom.x >= m->w.x + scroller_structs &&
-          c->geom.x + c->geom.width <= m->w.x + m->w.width - scroller_structs && i != 0 && i != n-1) {
+          c->geom.x + c->geom.width <= m->w.x + m->w.width - scroller_structs && ((i != 0 && i != n-1) || scroller_prefer_center)) {
         need_scroller = false;
       } else {
         need_scroller = true;
