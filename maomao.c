@@ -6019,9 +6019,9 @@ void scroller(Monitor *m, unsigned int gappo, unsigned int gappi) {
 
   if (need_scroller) {
     if (scroller_focus_center ||
-        (m->prevsel && (m->prevsel->scroller_proportion * max_client_width) +
+        ((!m->prevsel || (m->prevsel->scroller_proportion * max_client_width) +
                 (root_client->scroller_proportion * max_client_width) >
-            m->w.width - 2 * scroller_structs - gappih && scroller_prefer_center)) {
+            m->w.width - 2 * scroller_structs - gappih) && scroller_prefer_center)) {
       target_geom.x = m->w.x + (m->w.width - target_geom.width) / 2;
     } else {
       target_geom.x =
