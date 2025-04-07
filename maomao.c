@@ -5996,7 +5996,7 @@ void scroller(Monitor *m, unsigned int gappo, unsigned int gappi) {
     c = tempClients[i];
     if (root_client == c) {
       if (c->geom.x >= m->w.x + scroller_structs &&
-          c->geom.x + c->geom.width <= m->w.x + m->w.width - scroller_structs) {
+          c->geom.x + c->geom.width <= m->w.x + m->w.width - scroller_structs && i != 0 && i != n-1) {
         need_scroller = false;
       } else {
         need_scroller = true;
@@ -6011,14 +6011,14 @@ void scroller(Monitor *m, unsigned int gappo, unsigned int gappi) {
   target_geom.y = m->w.y + (m->w.height - target_geom.height) / 2;
 
   if (need_scroller) {
-    if (scroller_focus_center || m->prevsel == NULL ||
-        ((m->prevsel->scroller_proportion * max_client_width) +
+    if (scroller_focus_center ||
+        (m->prevsel && (m->prevsel->scroller_proportion * max_client_width) +
                 (root_client->scroller_proportion * max_client_width) >
             m->w.width - 2 * scroller_structs - gappih && scroller_prefer_center)) {
       target_geom.x = m->w.x + (m->w.width - target_geom.width) / 2;
     } else {
       target_geom.x =
-          root_client->geom.x > m->w.x + (m->w.width) / 2
+          ((root_client->geom.x > m->w.x + (m->w.width) / 2) || focus_client_index == n - 1) && focus_client_index != 0
               ? m->w.x + (m->w.width -
                           root_client->scroller_proportion * max_client_width -
                           scroller_structs)
